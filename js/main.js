@@ -30,6 +30,7 @@
     { src: "assets/images/tratamento.png", cap: "Sala de tratamentos" },
     { src: "assets/images/unhas.png", cap: "Estação de unhas" }
   ];
+  const moments = catalog.moments || [];
 
   const hours = [
     { day: 1, name: "Segunda", open: "09:00", close: "19:00" },
@@ -316,30 +317,39 @@
     const img = $("#lightboxImg");
     const cap = $("#lightboxCap");
     const dots = $("#lightboxDots");
-    const openBtn = $("#galleryOpen");
+    if (!dialog || !img) return;
+    let album = gallery;
     let index = 0;
 
+    const paintDots = () => {
+      dots.innerHTML = album
+        .map((_, i) => `<button type="button" aria-label="Fotografia ${i + 1}"></button>`)
+        .join("");
+      dots.querySelectorAll("button").forEach((b, i) => b.addEventListener("click", () => show(i)));
+    };
+
     const show = (i) => {
-      index = (i + gallery.length) % gallery.length;
-      img.src = gallery[index].src;
-      img.alt = gallery[index].cap;
-      cap.textContent = `${gallery[index].cap} · ${index + 1}/${gallery.length}`;
+      index = (i + album.length) % album.length;
+      img.src = album[index].src;
+      img.alt = album[index].cap;
+      cap.textContent = `${album[index].cap} · ${index + 1}/${album.length}`;
       dots.querySelectorAll("button").forEach((b, n) => b.classList.toggle("is-active", n === index));
     };
 
-    dots.innerHTML = gallery
-      .map((_, i) => `<button type="button" aria-label="Fotografia ${i + 1}"></button>`)
-      .join("");
-    dots.querySelectorAll("button").forEach((b, i) => b.addEventListener("click", () => show(i)));
-
-    openBtn?.addEventListener("click", () => {
-      show(0);
+    const openAlbum = (list, start = 0) => {
+      album = list;
+      paintDots();
+      show(start);
       dialog.showModal();
-    });
+    };
+
+    paintDots();
+    $("#galleryOpen")?.addEventListener("click", () => openAlbum(gallery));
+    $("#momentsOpen")?.addEventListener("click", () => openAlbum(moments));
     $("#lightboxClose")?.addEventListener("click", () => dialog.close());
     $("#lightboxPrev")?.addEventListener("click", () => show(index - 1));
     $("#lightboxNext")?.addEventListener("click", () => show(index + 1));
-    dialog?.addEventListener("click", (e) => {
+    dialog.addEventListener("click", (e) => {
       if (e.target === dialog) dialog.close();
     });
     window.addEventListener("keydown", (e) => {
@@ -349,8 +359,8 @@
     });
 
     let startX = 0;
-    dialog?.addEventListener("touchstart", (e) => (startX = e.changedTouches[0].clientX), { passive: true });
-    dialog?.addEventListener(
+    dialog.addEventListener("touchstart", (e) => (startX = e.changedTouches[0].clientX), { passive: true });
+    dialog.addEventListener(
       "touchend",
       (e) => {
         const dx = e.changedTouches[0].clientX - startX;
