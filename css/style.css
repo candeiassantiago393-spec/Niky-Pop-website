@@ -666,6 +666,11 @@ p {
   color: var(--ink-soft);
 }
 
+.page-hero .notice {
+  max-width: 68ch;
+  margin-top: 16px;
+}
+
 .cat-nav {
   display: flex;
   flex-wrap: wrap;
