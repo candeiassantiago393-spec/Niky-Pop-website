@@ -538,10 +538,112 @@ p {
   padding-bottom: clamp(20px, 2.4vw, 32px);
 }
 
+.featured-grid,
 .service-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+}
+
+.featured-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 981px) {
+  .featured-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.see-all-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100%;
+  padding: 22px 22px 24px;
+  border-radius: 22px;
+  background: var(--green-deep);
+  color: #f7f2ea;
+  box-shadow: var(--shadow);
+}
+
+.see-all-card .eyebrow {
+  color: var(--gold-soft);
+}
+
+.see-all-card .eyebrow::before {
+  background: var(--gold-soft);
+}
+
+.see-all-card h3 {
+  font-size: clamp(1.8rem, 3vw, 2.3rem);
+  margin: 8px 0 10px;
+}
+
+.see-all-card p {
+  color: #d8e4dc;
+  margin: 0 0 18px;
+}
+
+.see-all-card span {
+  font-size: 0.86rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+}
+
+.service-card--link {
+  color: inherit;
+  cursor: pointer;
+}
+
+.page-hero {
+  padding: calc(var(--header) + 36px) 0 20px;
+  background: var(--foam);
+}
+
+.page-hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  margin-bottom: 12px;
+}
+
+.page-hero .lead {
+  max-width: 52ch;
+  color: var(--ink-soft);
+}
+
+.cat-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.cat-nav a {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 0.88rem;
+}
+
+.cat-nav a:hover,
+.cat-nav a[aria-current="page"] {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+
+.cat-block {
+  padding: clamp(28px, 3.6vw, 48px) 0;
+}
+
+.cat-block:nth-child(even) {
+  background: var(--foam);
+}
+
+.cat-block .section__head {
+  max-width: 560px;
 }
 
 .service-card {
@@ -1186,6 +1288,7 @@ p {
   .contact__grid,
   .footer__grid,
   .service-grid,
+  .featured-grid,
   .review-track {
     grid-template-columns: 1fr 1fr;
   }
@@ -1231,6 +1334,7 @@ p {
   .contact__grid,
   .footer__grid,
   .service-grid,
+  .featured-grid,
   .review-track {
     grid-template-columns: 1fr;
   }

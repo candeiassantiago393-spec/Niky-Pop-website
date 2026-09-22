@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1e3a32">
+  <title>Serviços · Niky Pop · Estética e Saúde</title>
+  <meta name="description" content="Menu de serviços da Niky Pop em Lisboa: cabeleireiro, massagens, manicure, tratamentos estéticos, sobrancelhas e pestanas.">
+  <link rel="icon" href="assets/images/lily.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
+
+  <div class="demo-banner" role="status">
+    <span class="demo-banner__mark">Demonstração</span>
+    <p>Lista real de serviços. Durações e preços ficam sob consulta até a cliente os confirmar.</p>
+  </div>
+
+  <header class="header is-solid" id="topo">
+    <div class="header__inner">
+      <a class="brand" href="index.html" aria-label="Niky Pop início">
+        <img src="assets/images/lily.svg" alt="" class="brand__lily" width="28" height="38">
+        <span>
+          <span class="brand__name">Niky<span class="brand__y"> </span>Pop</span>
+          <span class="brand__tag">Estética e Saúde</span>
+        </span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Principal">
+        <a href="index.html#espaco">O espaço</a>
+        <a href="servicos.html" aria-current="page">Serviços</a>
+        <a href="index.html#criticas">Críticas</a>
+        <a href="index.html#horarios">Horário</a>
+        <a href="index.html#galeria">Galeria</a>
+        <a href="index.html#contacto">Contacto</a>
+      </nav>
+      <a class="btn btn--header" href="index.html#marcar">Agendar</a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="eyebrow">Menu</p>
+        <h1>Todos os serviços</h1>
+        <p class="lead">Organizados por cabeleireiro, massagens, unhas, estética, sobrancelhas e pestanas. Valores e durações sob consulta.</p>
+        <nav class="cat-nav" id="catNav" aria-label="Categorias"></nav>
+      </div>
+    </section>
+    <div id="serviceCatalog"></div>
+    <section class="cta-band">
+      <div class="wrap reveal">
+        <p class="eyebrow">Agenda</p>
+        <h2>Marque a sua sessão.</h2>
+        <p>Envie uma mensagem no WhatsApp com o tratamento e o horário pretendido.</p>
+        <a class="btn btn--gold" href="index.html#marcar">Pedir marcação</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div class="footer__brand">
+        <img src="assets/images/logo.png" alt="Logótipo Niky Pop Estética e Saúde" width="280" height="180">
+      </div>
+      <div>
+        <p>Niky Pop · Estética e Saúde</p>
+        <p>Rua de São Filipe Néri 25B, 1250-226 Lisboa</p>
+        <p><a href="tel:+351211944983">21 194 4983</a> · <a href="https://wa.me/351968794656">968 794 656</a></p>
+      </div>
+      <p class="footer__demo">Website de demonstração. Tudo é exemplo provisório e a cliente altera o que quiser.</p>
+    </div>
+  </footer>
+
+  <a class="wa-float" href="https://wa.me/351968794656" target="_blank" rel="noopener" aria-label="Abrir WhatsApp">WhatsApp</a>
+
+  <script src="js/servicos-data.js?v=1"></script>
+  <script src="js/main.js?v=8" defer></script>
+</body>
+</html>

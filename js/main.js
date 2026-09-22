@@ -1,82 +1,8 @@
 (() => {
   const WA = "351968794656";
   const PHONE = "+351211944983";
-
-  const services = [
-    {
-      name: "Limpeza de Pele Profunda",
-      desc: "Higienização, extração, alta frequência, LED, máscara adequada ao tipo de pele e massagem final.",
-      duration: "1h30–2h",
-      price: "60,00 €",
-      photos: ["assets/images/servicos/limpeza-profunda.jpg"]
-    },
-    {
-      name: "Browlamination",
-      desc: "Alinha os fios rebeldes e acrescenta volume em sobrancelhas mais finas.",
-      duration: "1h15",
-      price: "35,00 €",
-      photos: [
-        "assets/images/servicos/browlamination-01.jpg",
-        "assets/images/servicos/browlamination-02.jpg",
-        "assets/images/servicos/browlamination-03.jpg"
-      ]
-    },
-    {
-      name: "Dermaplaning Premium",
-      desc: "Remove a camada de células mortas e a penugem com lâmina fina. Inclui limpeza, LED e máscara.",
-      duration: "A definir",
-      price: "50,00 €",
-      photos: ["assets/images/servicos/dermaplaning-premium.jpg"]
-    },
-    {
-      name: "Lash Lifting",
-      desc: "Curvatura natural dos cílios, sem manutenção diária. O efeito dura cerca de cinco semanas.",
-      duration: "1h30",
-      price: "35,00 €",
-      photos: ["assets/images/servicos/lash-lifting.jpg"]
-    },
-    {
-      name: "Microagulhamento Facial",
-      desc: "Estimula a produção de colagénio. Indicado para cicatrizes de acne, linhas, poros e manchas. Tratamento indolor.",
-      duration: "A definir",
-      price: "55,00 €",
-      photos: [
-        "assets/images/servicos/microagulhamento-01.jpg",
-        "assets/images/servicos/microagulhamento-02.jpg"
-      ]
-    },
-    {
-      name: "Micropigmentação de Sobrancelhas",
-      desc: "Pigmento orgânico para preencher falhas ou definir o desenho. Não é tatuagem. Duração aproximada de dois anos.",
-      duration: "A definir",
-      price: "150,00 €",
-      photos: [
-        "assets/images/servicos/micropigmentacao-sobrancelhas-01.jpg",
-        "assets/images/servicos/micropigmentacao-sobrancelhas-02.jpg"
-      ]
-    },
-    {
-      name: "Micropigmentação Labial",
-      desc: "Cor e contorno labial duradouros, para um resultado definido no dia a dia.",
-      duration: "A definir",
-      price: "120,00 €",
-      photos: ["assets/images/servicos/micropigmentacao-labial.jpg"]
-    },
-    {
-      name: "Revitalização Facial",
-      desc: "Higienização, esfoliação, máscara e massagem. Devolve hidratação e luminosidade à pele.",
-      duration: "1h30",
-      price: "45,00 €",
-      photos: ["assets/images/servicos/revitalizacao-facial.jpg"]
-    },
-    {
-      name: "Spa das Sobrancelhas",
-      desc: "Reconstrução, design e tratamento das sobrancelhas, com um resultado visível.",
-      duration: "1h",
-      price: "25,00 €",
-      photos: ["assets/images/servicos/spa-das-sobrancelhas.jpg"]
-    }
-  ];
+  const catalog = window.NikyServicos || { categories: [], services: [], featured: [] };
+  const services = catalog.services;
 
   const reviews = [
     {
@@ -86,13 +12,13 @@
     },
     {
       name: "Raquel S.",
-      text: "O lash lifting ficou natural, exactamente o resultado que procurava. Já marquei a manutenção.",
-      service: "Lash Lifting"
+      text: "A massagem de relaxamento e o cuidado com as unhas são consistentes. O espaço é calmo e organizado.",
+      service: "Massagens"
     },
     {
       name: "Marta P.",
-      text: "As sobrancelhas ficaram definidas, sem um aspecto desenhado. Espaço cuidado, junto ao Rato.",
-      service: "Browlamination"
+      text: "Corte e coloração com um resultado natural. Fica junto ao Rato e é fácil de marcar.",
+      service: "Cabeleireiro"
     }
   ];
 
@@ -137,13 +63,8 @@
     `;
   }
 
-  function renderServices() {
-    const grid = $("#serviceGrid");
-    const select = $("#servicoSelect");
-    if (!grid) return;
-    grid.innerHTML = services
-      .map(
-        (s) => `
+  function cardHTML(s) {
+    return `
       <article class="service-card">
         <div class="service-card__media">
           ${serviceMedia(s)}
@@ -156,16 +77,85 @@
             <strong class="price">${s.price}</strong>
           </div>
         </div>
-      </article>`
+      </article>`;
+  }
+
+  function renderFeatured() {
+    const grid = $("#featuredGrid");
+    if (!grid) return;
+    const items = catalog.featured
+      .map(
+        (c) => `
+      <a class="service-card service-card--link" href="servicos.html#${c.id}">
+        <div class="service-card__media">${serviceMedia({ name: c.name, photos: c.photos })}</div>
+        <div class="service-card__body">
+          <p class="chip">${catalog.services.filter((s) => s.cat === c.id).length} serviços</p>
+          <h3>${c.name}</h3>
+          <p>${c.lead}</p>
+          <div class="service-card__meta">
+            <span>Ver tratamentos</span>
+            <strong class="price">Abrir</strong>
+          </div>
+        </div>
+      </a>`
       )
       .join("");
+    const total = catalog.services.length;
+    grid.innerHTML =
+      items +
+      `<a class="see-all-card" href="servicos.html">
+        <p class="eyebrow">Menu completo</p>
+        <h3>Ver todos os serviços</h3>
+        <p>Cabeleireiro, massagens, unhas, estética, sobrancelhas e pestanas. ${total} tratamentos.</p>
+        <span>Abrir o menu</span>
+      </a>`;
     grid.querySelectorAll("img").forEach(markReady);
     startFairs(grid);
-    if (select) {
-      select.innerHTML =
-        `<option value="" disabled selected>Escolher o tratamento</option>` +
-        services.map((s) => `<option>${s.name}</option>`).join("");
+  }
+
+  function renderCatalog() {
+    const root = $("#serviceCatalog");
+    if (!root) return;
+    root.innerHTML = catalog.categories
+      .map((c) => {
+        const list = catalog.services.filter((s) => s.cat === c.id);
+        return `
+        <section class="cat-block" id="${c.id}">
+          <div class="wrap">
+            <div class="section__head">
+              <p class="eyebrow">${list.length} tratamentos</p>
+              <h2>${c.name}</h2>
+              <p class="lead">${c.lead}</p>
+            </div>
+            <div class="service-grid">${list.map(cardHTML).join("")}</div>
+          </div>
+        </section>`;
+      })
+      .join("");
+    const nav = $("#catNav");
+    if (nav) {
+      nav.innerHTML = catalog.categories
+        .map((c) => `<a href="#${c.id}">${c.name}</a>`)
+        .join("");
     }
+    root.querySelectorAll("img").forEach(markReady);
+    startFairs(root);
+  }
+
+  function fillSelect() {
+    const select = $("#servicoSelect");
+    if (!select) return;
+    select.innerHTML =
+      `<option value="" disabled selected>Escolher o tratamento</option>` +
+      catalog.categories
+        .map((c) => {
+          const opts = catalog.services
+            .filter((s) => s.cat === c.id)
+            .map((s) => `<option>${s.name}</option>`)
+            .join("");
+          return `<optgroup label="${c.name}">${opts}</optgroup>`;
+        })
+        .join("");
   }
 
   function startFairs(root = document) {
@@ -420,7 +410,9 @@
     });
   }
 
-  renderServices();
+  renderFeatured();
+  renderCatalog();
+  fillSelect();
   renderReviews();
   renderHours();
   enhanceVideo();
